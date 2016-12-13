@@ -38,13 +38,19 @@ ds.addSample(map(int,'6 8 6 8 6'.split()),map(int,'3'.split()))
 ds.addSample(map(int,'1 2 1 2 1'.split()),map(int,'9'.split()))
 ds.addSample(map(int,'4 6 4 6 4'.split()),map(int,'8'.split()))
 ds.addSample(map(int,'2 5 9 3 5'.split()),map(int,'1'.split()))
+
+
 net=buildNetwork(5,50,1,outclass=LinearLayer,bias=True,recurrent=True)
 trainer=BackpropTrainer(net,ds)
 trainer.trainEpochs(100)
+
+
 n=input("Enter number of process:")
 print "Enter the burst time of first five process:"
 bt=[]
 p=[]
+
+
 for i in range(0,5):
     bt.append(int(input("p%(x)d :"%{"x":i+1})))
 for i in range(0,n):
@@ -60,6 +66,7 @@ for l in range(5,n):
     x=net.activateOnDataset(ts)
     bt.append(int(x))
 
+
 print "----------------------------------------------------------------"
 print "                      FCFS                                      "
 print "----------------------------------------------------------------"
@@ -70,6 +77,8 @@ for i in range(1,n):
     for j in range(0,i):
         wt[i]+=bt[j]
     total+=wt[i]
+
+
 avg_wt1=float(total)/n
 total=0
 print "Process    Burst time    waiting time    Turnaround Time"
@@ -81,6 +90,8 @@ for i in range(0,n):
 avg_tat1=float(total)/n
 print "Average waiting time=%(k)f"%{"k":avg_wt1}
 print "Average turnaround time=%(l)f"%{"l":avg_tat1}
+
+
 
 print "---------------------------------------------------------------"
 print "                      SJF                                      "
@@ -99,6 +110,8 @@ for l in range(5,n):
         p[i]=p[pos]
         p[pos]=temp
     k=k+1
+
+
 wt=[0]
 total=0
 for i in range(1,n):
@@ -106,6 +119,8 @@ for i in range(1,n):
     for j in range(0,i):
         wt[i]+=bt[j]
     total+=wt[i]
+
+
 avg_wt2=float(total)/n
 total=0
 print "Process    Burst time    waiting time    Turnaround Time"
@@ -114,6 +129,8 @@ for i in range(0,n):
     tat.append(bt[i]+wt[i])
     total+=tat[i]
     print "p%-9d %-13d %-15d %-10d"%(p[i],bt[i],wt[i],tat[i])
+
+
 avg_tat2=float(total)/n
 print "Average waiting time=%(k)f"%{"k":avg_wt2}
 print "Average turnaround time=%(l)f"%{"l":avg_tat2}
